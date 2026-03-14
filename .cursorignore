@@ -1,0 +1,32 @@
+secrets.txt
+frontdeskagent-e8427d0c90cd.json
+
+# Dependencies
+**/node_modules/
+**/.pnpm-store/
+
+# Next.js
+**/.next/
+**/out/
+**/build/
+**/dist/
+
+# Python
+**/venv/
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+**/.eggs/
+**/*.egg-info/
+
+# Env & secrets (keep out of AI context; edit files directly when needed)
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Logs & caches
+**/*.log
+**/.turbo/
+**/.cache/
+
+**/.DS_Store

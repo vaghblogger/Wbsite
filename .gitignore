@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+**/node_modules/
+.pnpm-store/
+frontdeskagent-e8427d0c90cd.json
+google-sheets-credentials.json
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env & secrets (never commit)
+.env
+.env.local
+.env.*.local
+secrets.txt
+
+# Logs & debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Turbo / caches
+.turbo/
+.cache/
+
+# Testing / coverage
+coverage/
+.nyc_output/
+
+# Demo calendar store (PII)
+agent-platform/agent-engine/data/
+
+# Misc
+*.tsbuildinfo
+.vercel

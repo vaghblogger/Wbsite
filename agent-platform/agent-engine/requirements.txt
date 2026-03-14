@@ -1,0 +1,17 @@
+langgraph>=0.2.0
+langchain-openai>=0.2.0
+langchain-core>=0.3.0
+fastapi>=0.115.0
+uvicorn>=0.34.0
+sse-starlette>=2.2.0
+supabase>=2.11.0
+python-dotenv>=1.0.0
+pydantic>=2.10.0
+
+# --- Google Sheets (CRM log append: tickets, crm_update, log) ---
+# Setup: docs/google-sheets-crm.md | Env: GOOGLE_SHEETS_LOG_ID, GOOGLE_SHEETS_CREDS_FILE
+gspread>=6.0.0
+google-auth>=2.29.0
+
+# --- Optional: Airtable append (same code path as Sheets) ---
+pyairtable>=2.0.0

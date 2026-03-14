@@ -1,0 +1,38 @@
+# Agent platform — run all services
+
+Philosophy: **AI Front Desk** = one LangGraph ReAct engine; businesses differ only via
+`preset_roles` + `prompt_config` / `instructions` / `restrictions` (and optional new slugs in
+`FRONT_DESK_AGENT_IDS`). Other agent cards are placeholders until you register graphs.
+
+## 1. Database (Supabase SQL Editor)
+
+- **New project:** run `agent-platform/supabase/schema.sql` (includes ai-front-desk + demo rows).
+- **Existing DB (had old ai-receptionist, etc.):** run `agent-platform/supabase/migration_role_switcher.sql`
+  (adds columns, upserts ai-front-desk, deactivates legacy slugs).
+
+## 2. Env
+
+cp agent-platform/gateway/.env.example agent-platform/gateway/.env
+cp agent-platform/agent-engine/.env.example agent-platform/agent-engine/.env
+# gateway: SUPABASE_URL, SUPABASE_ANON_KEY
+# agent-engine: OPENAI_API_KEY (required for chat), HOST/PORT
+
+## 3. Agent engine (port 8000)
+
+cd agent-platform/agent-engine
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+python -m app.main
+
+## 4. Gateway (port 3001)
+
+export PATH="$HOME/.bun/bin:$PATH"
+cd agent-platform/gateway
+bun install && bun run dev
+
+## 5. Frontend (port 3000)
+
+cd agent-platform/frontend
+npm install && npm run dev
+
+Open http://localhost:3000 — primary demo: **AI Front Desk** + Role Picker.

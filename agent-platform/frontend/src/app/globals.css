@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 5.5%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 5.5%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 263.4 70% 50.4%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* React Flow dark theme overrides */
+.dark .react-flow__background {
+  background-color: transparent !important;
+}
+.dark .react-flow__controls button {
+  background-color: hsl(240 10% 8%);
+  color: hsl(0 0% 80%);
+  border-color: hsl(240 3.7% 20%);
+}
+.dark .react-flow__controls button:hover {
+  background-color: hsl(240 10% 12%);
+}
+.dark .react-flow__edge-path {
+  stroke: hsl(240 5% 35%);
+}
+.dark .react-flow__minimap {
+  background-color: hsl(240 10% 5%);
+}
+
+/* Animated gradient text */
+.animate-gradient-text {
+  background-size: 200% auto;
+  animation: gradient-text 6s ease infinite;
+}
+
+/* Shimmer button effect */
+.shimmer-button {
+  background-size: 200% 100%;
+  transition: background-position 0.5s ease;
+}
+.shimmer-button:hover {
+  background-position: -100% 0;
+}
+
+/* Logo marquee (tech stack section) */
+@keyframes logo-marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes logo-marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.logo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: logo-marquee-left 55s linear infinite;
+}
+.logo-marquee-track--right {
+  animation: logo-marquee-right 60s linear infinite;
+}
+.logo-marquee-wrap:hover .logo-marquee-track,
+.logo-marquee-wrap:hover .logo-marquee-track--right {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee-track,
+  .logo-marquee-track--right {
+    animation: none;
+    transform: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
