@@ -33,10 +33,14 @@ const iconMap: Record<string, React.ElementType> = {
 /** Uniform card height across grid; front desk uses 2×2 role grid inside same footprint */
 const CARD_MIN_H = "min-h-[19rem] sm:min-h-[20.5rem]";
 
+const AI_CHATBOTS_DISPLAY_NAME = "AI Chatbots and Conversational AI";
+
 export function AgentCard({ agent, index }: { agent: Agent; index: number }) {
   const accent = getAccentColor(agent.accent_color);
   const IconComponent = iconMap[agent.icon] || Bot;
   const hasRoles = agent.preset_roles && agent.preset_roles.length > 0;
+  const displayName =
+    agent.slug === "ai-front-desk" ? AI_CHATBOTS_DISPLAY_NAME : agent.name;
 
   return (
     <motion.div
@@ -92,7 +96,7 @@ export function AgentCard({ agent, index }: { agent: Agent; index: number }) {
 
             {/* Title & description */}
             <h3 className="mb-2 text-lg font-semibold text-foreground transition-colors group-hover:text-white">
-              {agent.name}
+              {displayName}
             </h3>
             <p className="mb-4 min-h-[3.75rem] text-sm leading-relaxed text-muted-foreground line-clamp-3">
               {agent.description}

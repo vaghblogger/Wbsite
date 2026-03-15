@@ -10,11 +10,11 @@ export function Footer() {
               <Cpu className="h-4 w-4 text-white" />
             </div>
             <span className="text-sm font-semibold text-white">
-              Agent<span className="text-violet-400">Hub</span>
+              Vagh <span className="text-violet-400">Labs</span>
             </span>
           </div>
           <p className="text-sm text-zinc-400">
-            Built with LangGraph, Next.js, and Bun. Powered by AI.
+            AI solutions that drive growth.
           </p>
         </div>
       </div>

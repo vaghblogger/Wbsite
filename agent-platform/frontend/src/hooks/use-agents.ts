@@ -24,7 +24,7 @@ const FALLBACK_AGENTS: Agent[] = [
   {
     id: "10",
     slug: "ai-front-desk",
-    name: "AI Front Desk",
+    name: "AI Chatbots and Conversational AI",
     description:
       "One configurable front-desk agent — switch roles for clinic, dental, corporate, or hotel (same engine, DB-driven persona).",
     category: "Front Desk",
@@ -214,14 +214,22 @@ const FALLBACK_AGENTS: Agent[] = [
   },
 ];
 
+const AI_FRONT_DESK_SLUG = "ai-front-desk";
+
+function sortAgentsWithFrontDeskFirst(agents: Agent[]): Agent[] {
+  const frontDesk = agents.find((a) => a.slug === AI_FRONT_DESK_SLUG);
+  const rest = agents.filter((a) => a.slug !== AI_FRONT_DESK_SLUG);
+  return frontDesk ? [frontDesk, ...rest] : agents;
+}
+
 export function useAgents() {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAgents()
-      .then((data) => setAgents(data))
-      .catch(() => setAgents(FALLBACK_AGENTS))
+      .then((data) => setAgents(sortAgentsWithFrontDeskFirst(data)))
+      .catch(() => setAgents(sortAgentsWithFrontDeskFirst(FALLBACK_AGENTS)))
       .finally(() => setLoading(false));
   }, []);
 

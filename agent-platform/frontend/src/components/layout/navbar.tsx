@@ -7,7 +7,8 @@ import { Cpu } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/#agents", label: "Agents" },
+  { href: "/#services", label: "Services" },
+  { href: "/agents/ai-front-desk", label: "Agents" },
 ];
 
 export function Navbar() {
@@ -29,7 +30,7 @@ export function Navbar() {
             </div>
           </div>
           <span className="text-lg font-bold tracking-tight text-white">
-            Agent<span className="text-violet-400">Hub</span>
+            Vagh <span className="text-violet-400">Labs</span>
           </span>
         </Link>
 

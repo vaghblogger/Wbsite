@@ -11,8 +11,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AgentHub - AI Agent Library",
-  description: "Explore, chat with, and visualize AI agents powered by LangGraph",
+  title: "Vagh Labs",
+  description:
+    "We help ambitious companies leverage AI to work smarter, not harder—delivering tailored solutions that automate repetitive tasks, surface actionable insights, and drive revenue growth.",
 };
 
 export default function RootLayout({

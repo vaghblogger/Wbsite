@@ -34,7 +34,7 @@ interface RolePickerProps {
 export function RolePicker({ roles, activeRoleId, onRoleChange }: RolePickerProps) {
   return (
     <div className="mb-0">
-      <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 font-medium">
+      <p className="text-base sm:text-lg font-medium text-muted-foreground mb-2 sm:mb-3">
         Try a role
       </p>
       <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 overflow-x-auto sm:overflow-visible pb-1 -mx-1 px-1 sm:mx-0 sm:px-0 snap-x snap-mandatory touch-pan-x">

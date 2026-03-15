@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
+  Building2,
   Calendar,
   Users,
   Mail,
@@ -35,6 +36,61 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getAccentColor } from "@/lib/utils";
 import type { AgentPresetRole } from "@/types";
+import { LogoGrid, type LogoItem } from "@/components/marketing/credibility-section";
+import {
+  CHATBOT_INTEGRATION_ITEMS,
+  type Item,
+} from "@/components/marketing/tech-stack";
+
+function isLogoItem(item: Item): item is LogoItem {
+  return item.kind === "si" || item.kind === "img";
+}
+
+function pickLogoItemsFrom(source: Item[], names: string[]): LogoItem[] {
+  const byName = new Map<string, LogoItem>();
+  for (const item of source) {
+    if (!isLogoItem(item)) continue;
+    const name = item.kind === "si" ? item.icon.title : item.alt;
+    if (!byName.has(name)) byName.set(name, item);
+  }
+  const out: LogoItem[] = [];
+  for (const name of names) {
+    const item = byName.get(name);
+    if (item) out.push(item);
+  }
+  return out;
+}
+
+/** Group 1: Natural chatbot channels — where users talk to the bot. */
+const CHATBOT_CHANNEL_GROUPS: { title: string; names: string[] }[] = [
+  { title: "Messaging", names: ["WhatsApp", "Telegram", "Discord", "LINE"] },
+];
+
+/** Group 2: Supporting integrations — power workflows & data (may or may not apply to every bot). */
+const CHATBOT_SUPPORTING_GROUPS: { title: string; names: string[] }[] = [
+  {
+    title: "Email",
+    names: ["Gmail", "Mailgun", "Proton Mail", "Brevo", "Mailchimp"],
+  },
+  {
+    title: "Data & storage",
+    names: [
+      "Google Sheets",
+      "Google Drive",
+      "Airtable",
+      "Notion",
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "Redis",
+      "Supabase",
+    ],
+  },
+  { title: "Productivity", names: ["Trello", "Google Calendar", "Todoist", "Pushbullet"] },
+  { title: "Sales & CRM", names: ["HubSpot", "Zendesk", "Intercom", "Zoho"] },
+  { title: "Finance & commerce", names: ["Stripe", "Shopify"] },
+  { title: "Developer tools", names: ["GitHub", "Jira", "Linear"] },
+];
 
 const toolIconMap: Record<string, React.ElementType> = {
   calendar: Calendar,
@@ -228,6 +284,11 @@ export default function AgentDetailPage() {
     ? getAccentColor(activeRole.accent)
     : getAccentColor(agent.accent_color);
 
+  const displayName =
+    slug === "ai-front-desk"
+      ? "AI Chatbots and Conversational AI"
+      : agent.name;
+
   return (
     <PageTransition>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
@@ -239,14 +300,14 @@ export default function AgentDetailPage() {
         >
           <div className="flex items-center gap-3 min-w-0">
             <Link
-              href="/"
+              href="/#services"
               className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0 touch-manipulation py-2 -my-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back
+              Back to Core Services
             </Link>
             <div className="h-4 w-px bg-zinc-700 shrink-0 hidden sm:block" />
-            <h1 className="text-lg sm:text-2xl font-bold truncate">{agent.name}</h1>
+            <h1 className="text-lg sm:text-2xl font-bold truncate">{displayName}</h1>
           </div>
           <Badge
             variant="outline"
@@ -279,6 +340,17 @@ export default function AgentDetailPage() {
             />
           </motion.div>
         )}
+
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.08 }}
+          className="text-sm sm:text-base text-muted-foreground mb-6 max-w-2xl leading-relaxed"
+        >
+          What to expect: the chat below shows how the AI handles real conversations—answering
+          questions, checking availability, and booking appointments. Type a message or use the
+          quick actions to see it in action.
+        </motion.p>
 
         {/* Chat + optional calendar — full width mobile; split from lg */}
         <div
@@ -334,27 +406,89 @@ export default function AgentDetailPage() {
           transition={{ delay: 0.1 }}
           className="border-t border-white/[0.06] pt-6 sm:pt-8"
         >
-          <h3 className="text-xs sm:text-sm font-medium text-muted-foreground mb-3 sm:mb-4">
-            Tools Used
+          <h3 className="text-xl font-semibold tracking-tight sm:text-2xl text-foreground mb-2 sm:mb-3">
+            Integration possibilities for your chatbot
           </h3>
-          <div className="flex flex-wrap gap-2 sm:gap-3">
-            {agent.tools.map((tool) => {
-              const Icon = toolIconMap[tool] || Sparkles;
-              const label = toolLabels[tool] || tool;
-              return (
-                <div
-                  key={tool}
-                  className="flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-white/[0.06] bg-white/[0.03] max-w-full"
-                >
-                  <div
-                    className={`${accent.bg} ${accent.border} border rounded-lg p-1 sm:p-1.5 shrink-0`}
-                  >
-                    <Icon className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${accent.text}`} />
-                  </div>
-                  <span className="text-xs sm:text-sm font-medium truncate">{label}</span>
-                </div>
-              );
-            })}
+          <p className="text-sm text-muted-foreground/90 mb-8 max-w-2xl">
+            Some integrations are the channels where users talk to your bot; others power workflows
+            and data behind the scenes. Not every bot needs every integration—we pick what fits.
+          </p>
+
+          <div className="space-y-10 sm:space-y-12">
+            <section className="rounded-2xl border border-violet-500/20 bg-violet-950/20 p-6 sm:p-8">
+              <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-300/90 mb-1">
+                Example of where your chatbot can run
+              </h4>
+              <p className="text-xs text-muted-foreground/80 mb-5 max-w-xl">
+                Conversation channels—messaging, voice, email. These are where your users reach the
+                bot.
+              </p>
+              <div className="space-y-5 sm:space-y-6">
+                {CHATBOT_CHANNEL_GROUPS.map((cat) => {
+                  const items = pickLogoItemsFrom(CHATBOT_INTEGRATION_ITEMS, cat.names);
+                  return (
+                    <div key={cat.title}>
+                      <span className="text-xs font-medium text-muted-foreground/70">
+                        {cat.title}
+                      </span>
+                      <div className="mt-2 flex flex-wrap gap-2 sm:gap-3">
+                        <LogoGrid items={items} className="flex flex-wrap gap-2 sm:gap-3" />
+                        <a
+                          href="/#services"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex h-12 min-w-[100px] max-w-[140px] shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 backdrop-blur-sm transition-all duration-200 hover:border-white/20 hover:bg-white/[0.08]"
+                        >
+                          <Globe className="h-5 w-5 shrink-0 text-violet-400" strokeWidth={1.5} />
+                          <span className="truncate text-center text-xs font-medium text-zinc-300">
+                            Website chatbot
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="rounded-2xl border border-violet-500/20 bg-violet-950/20 p-6 sm:p-8">
+              <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-300/90 mb-1">
+                Example of what it can connect to
+              </h4>
+              <p className="text-xs text-muted-foreground/80 mb-5 max-w-xl">
+                Data, CRM, productivity, commerce—optional depending on your use case. We wire
+                only what you need.
+              </p>
+              <div className="space-y-5 sm:space-y-6">
+                {CHATBOT_SUPPORTING_GROUPS.map((cat) => {
+                  const items = pickLogoItemsFrom(CHATBOT_INTEGRATION_ITEMS, cat.names);
+                  const isSalesCrm = cat.title === "Sales & CRM";
+                  return (
+                    <div key={cat.title}>
+                      <span className="text-xs font-medium text-muted-foreground/70">
+                        {cat.title}
+                      </span>
+                      <div className="mt-2 flex flex-wrap gap-2 sm:gap-3">
+                        <LogoGrid items={items} className="flex flex-wrap gap-2 sm:gap-3" />
+                        {isSalesCrm && (
+                          <a
+                            href="https://www.salesforce.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex h-12 min-w-[100px] max-w-[140px] shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 backdrop-blur-sm transition-all duration-200 hover:border-white/20 hover:bg-white/[0.08]"
+                          >
+                            <Building2 className="h-5 w-5 shrink-0 text-violet-400" strokeWidth={1.5} />
+                            <span className="truncate text-center text-xs font-medium text-zinc-300">
+                              Salesforce
+                            </span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
           </div>
         </motion.div>
       </div>

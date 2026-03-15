@@ -33,16 +33,32 @@ import {
   siMistralai,
   siVercel,
   siFastapi,
+  siWhatsapp,
+  siLine,
+  siIntercom,
+  siZendesk,
+  siMailchimp,
+  siPushbullet,
+  siVonage,
+  siTrello,
+  siGooglecalendar,
+  siRedis,
+  siTodoist,
+  siGoogledrive,
+  siMailgun,
+  siProtonmail,
+  siBrevo,
+  siZoho,
 } from "simple-icons";
 
 type SiIcon = { path: string; title: string; hex: string };
 
-type Item =
+export type Item =
   | { kind: "si"; icon: SiIcon; href?: string }
   | { kind: "text"; label: string; href?: string }
   | { kind: "img"; src: string; alt: string; href?: string; width?: number; height?: number };
 
-const STACK: Item[] = [
+export const STACK: Item[] = [
   { kind: "si", icon: siNextdotjs, href: "https://nextjs.org" },
   { kind: "si", icon: siReact, href: "https://react.dev" },
   { kind: "si", icon: siTypescript, href: "https://www.typescriptlang.org" },
@@ -64,7 +80,7 @@ const STACK: Item[] = [
   { kind: "si", icon: siVercel, href: "https://vercel.com" },
 ];
 
-const AI_ECOSYSTEM: Item[] = [
+export const AI_ECOSYSTEM: Item[] = [
   { kind: "si", icon: siAnthropic, href: "https://anthropic.com" },
   { kind: "si", icon: siGoogle, href: "https://ai.google" },
   { kind: "si", icon: siMistralai, href: "https://mistral.ai" },
@@ -77,7 +93,7 @@ const AI_ECOSYSTEM: Item[] = [
   { kind: "text", label: "OpenAI", href: "https://platform.openai.com" },
 ];
 
-const N8N_ROW: Item[] = [
+export const N8N_ROW: Item[] = [
   {
     kind: "img",
     src: "/logos/n8n.svg",
@@ -93,35 +109,71 @@ const N8N_ROW: Item[] = [
   },
 ];
 
-const N8N_INTEGRATIONS: Item[] = [
+export const N8N_INTEGRATIONS: Item[] = [
   {
     kind: "img",
     src: "/logos/n8n.svg",
     alt: "n8n",
-    href: "https://n8n.io/integrations/",
+    href: "https://n8n.io",
     width: 88,
     height: 24,
   },
-  { kind: "text", label: "Slack", href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siGooglesheets, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siGmail, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siNotion, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siHubspot, href: "https://n8n.io/integrations/" },
-  { kind: "text", label: "Salesforce", href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siStripe, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siAirtable, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siDiscord, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siTelegram, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siPostgresql, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siMysql, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siMongodb, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siShopify, href: "https://n8n.io/integrations/" },
-  { kind: "text", label: "Twilio", href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siZoom, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siJira, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siLinear, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siGithub, href: "https://n8n.io/integrations/" },
-  { kind: "si", icon: siSupabase, href: "https://n8n.io/integrations/" },
+  { kind: "text", label: "Slack", href: "https://slack.com" },
+  { kind: "si", icon: siGooglesheets, href: "https://sheets.google.com" },
+  { kind: "si", icon: siGmail, href: "https://gmail.com" },
+  { kind: "si", icon: siNotion, href: "https://notion.so" },
+  { kind: "si", icon: siHubspot, href: "https://hubspot.com" },
+  { kind: "text", label: "Salesforce", href: "https://salesforce.com" },
+  { kind: "si", icon: siStripe, href: "https://stripe.com" },
+  { kind: "si", icon: siAirtable, href: "https://airtable.com" },
+  { kind: "si", icon: siDiscord, href: "https://discord.com" },
+  { kind: "si", icon: siTelegram, href: "https://telegram.org" },
+  { kind: "si", icon: siPostgresql, href: "https://postgresql.org" },
+  { kind: "si", icon: siMysql, href: "https://mysql.com" },
+  { kind: "si", icon: siMongodb, href: "https://mongodb.com" },
+  { kind: "si", icon: siShopify, href: "https://shopify.com" },
+  { kind: "text", label: "Twilio", href: "https://twilio.com" },
+  { kind: "si", icon: siZoom, href: "https://zoom.us" },
+  { kind: "si", icon: siJira, href: "https://atlassian.com/jira" },
+  { kind: "si", icon: siLinear, href: "https://linear.app" },
+  { kind: "si", icon: siGithub, href: "https://github.com" },
+  { kind: "si", icon: siSupabase, href: "https://supabase.com" },
+];
+
+/** Logo items for "Integration possibilities" — links to actual services. */
+export const CHATBOT_INTEGRATION_ITEMS: Item[] = [
+  { kind: "si", icon: siWhatsapp, href: "https://whatsapp.com" },
+  { kind: "si", icon: siTelegram, href: "https://telegram.org" },
+  { kind: "si", icon: siDiscord, href: "https://discord.com" },
+  { kind: "si", icon: siLine, href: "https://line.me" },
+  { kind: "si", icon: siVonage, href: "https://vonage.com" },
+  { kind: "si", icon: siGmail, href: "https://gmail.com" },
+  { kind: "si", icon: siMailgun, href: "https://www.mailgun.com" },
+  { kind: "si", icon: siProtonmail, href: "https://proton.me/mail" },
+  { kind: "si", icon: siBrevo, href: "https://www.brevo.com" },
+  { kind: "si", icon: siMailchimp, href: "https://mailchimp.com" },
+  { kind: "si", icon: siGooglesheets, href: "https://sheets.google.com" },
+  { kind: "si", icon: siGoogledrive, href: "https://drive.google.com" },
+  { kind: "si", icon: siNotion, href: "https://notion.so" },
+  { kind: "si", icon: siPushbullet, href: "https://pushbullet.com" },
+  { kind: "si", icon: siTrello, href: "https://trello.com" },
+  { kind: "si", icon: siGooglecalendar, href: "https://calendar.google.com" },
+  { kind: "si", icon: siTodoist, href: "https://todoist.com" },
+  { kind: "si", icon: siHubspot, href: "https://hubspot.com" },
+  { kind: "si", icon: siZendesk, href: "https://zendesk.com" },
+  { kind: "si", icon: siIntercom, href: "https://intercom.com" },
+  { kind: "si", icon: siZoho, href: "https://www.zoho.com" },
+  { kind: "si", icon: siAirtable, href: "https://airtable.com" },
+  { kind: "si", icon: siPostgresql, href: "https://postgresql.org" },
+  { kind: "si", icon: siMysql, href: "https://mysql.com" },
+  { kind: "si", icon: siMongodb, href: "https://mongodb.com" },
+  { kind: "si", icon: siRedis, href: "https://redis.io" },
+  { kind: "si", icon: siSupabase, href: "https://supabase.com" },
+  { kind: "si", icon: siStripe, href: "https://stripe.com" },
+  { kind: "si", icon: siJira, href: "https://atlassian.com/jira" },
+  { kind: "si", icon: siLinear, href: "https://linear.app" },
+  { kind: "si", icon: siShopify, href: "https://shopify.com" },
+  { kind: "si", icon: siGithub, href: "https://github.com" },
 ];
 
 /** Light tile + white logo well so brand SVGs read in dark and light theme. */
@@ -266,24 +318,13 @@ export function TechStack() {
         <LogoMarquee items={row1} direction="left" />
 
         <p className="mb-4 mt-10 text-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          n8n &amp; popular integrations
+          Popular integrations
         </p>
         <LogoMarquee items={row2} direction="right" />
 
-        <p className="mt-8 text-center">
-          <a
-            href="https://n8n.io/integrations/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-2 text-sm font-medium text-violet-300 hover:bg-violet-500/15"
-          >
-            500+ n8n integrations — browse full directory
-          </a>
-        </p>
-
         <p className="mt-6 text-center text-[10px] text-muted-foreground/80 leading-relaxed px-2">
           All logos and names are trademarks of their respective owners. No
-          endorsement implied. n8n is a trademark of n8n GmbH.
+          endorsement implied.
         </p>
       </div>
     </section>

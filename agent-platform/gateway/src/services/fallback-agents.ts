@@ -20,7 +20,7 @@ export const FALLBACK_AGENTS = [
   {
     id: "00000000-0000-4000-8000-000000000010",
     slug: "ai-front-desk",
-    name: "AI Front Desk",
+    name: "AI Chatbots and Conversational AI",
     description:
       "One configurable front-desk agent: same engine, different roles (clinic, dental, corporate, hotel) via preset_roles — no extra deploy per business.",
     category: "Front Desk",
