@@ -1,21 +1,18 @@
 "use client";
 
-import { motion } from "framer-motion";
-
-const variants = {
-  hidden: { opacity: 0, y: 20 },
-  enter: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -10 },
-};
+import { motion, useReducedMotion } from "framer-motion";
+import { pageTransitionConfig, pageTransitionVariants } from "@/lib/motion";
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      variants={variants}
-      initial="hidden"
-      animate="enter"
-      exit="exit"
-      transition={{ duration: 0.4, ease: "easeOut" }}
+      variants={shouldReduceMotion ? undefined : pageTransitionVariants}
+      initial={shouldReduceMotion ? false : "hidden"}
+      animate={shouldReduceMotion ? undefined : "enter"}
+      exit={shouldReduceMotion ? undefined : "exit"}
+      transition={pageTransitionConfig}
     >
       {children}
     </motion.div>

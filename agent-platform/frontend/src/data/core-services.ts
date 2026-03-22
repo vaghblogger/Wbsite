@@ -69,8 +69,8 @@ const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Sales and engagement bots that qualify leads and book demos",
       "Multi-channel deployment: web, WhatsApp, voice, and more",
     ],
-    demoCtaLabel: "Try our agents",
-    demoCtaHref: "#agents",
+    demoCtaLabel: "See AI agents in action",
+    demoCtaHref: "/agents/ai-front-desk",
   },
   "workflow-automation": {
     title: "Workflow & Process Automation",
@@ -82,8 +82,8 @@ const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Scheduled and on-demand workflows for reports and syncs",
       "Built on proven platforms with custom logic where you need it",
     ],
-    demoCtaLabel: "Book a strategy call",
-    demoCtaHref: "/#book-call",
+    demoCtaLabel: "Book a free AI strategy call",
+    demoCtaHref: "/book?source=service-workflow-automation",
   },
   "document-data-processing": {
     title: "Intelligent Document & Data Processing",
@@ -96,7 +96,7 @@ const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Custom pipelines tuned to your formats and workflows",
     ],
     demoCtaLabel: "Discuss your use case",
-    demoCtaHref: "/#book-call",
+    demoCtaHref: "/book?source=service-document-data-processing",
   },
   "analytics-insights": {
     title: "AI-Powered Analytics & Insights",
@@ -108,8 +108,8 @@ const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Natural-language queries over your data",
       "Alerts and recommendations when metrics move",
     ],
-    demoCtaLabel: "Explore possibilities",
-    demoCtaHref: "/#book-call",
+    demoCtaLabel: "Book a free AI strategy call",
+    demoCtaHref: "/book?source=service-analytics-insights",
   },
   "integrations-custom": {
     title: "AI Integrations & Custom Solutions",
@@ -121,8 +121,8 @@ const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Embeddings and search for knowledge bases and docs",
       "Ongoing support and iteration as your needs evolve",
     ],
-    demoCtaLabel: "Book a strategy call",
-    demoCtaHref: "/#book-call",
+    demoCtaLabel: "Book a free AI strategy call",
+    demoCtaHref: "/book?source=service-integrations-custom",
   },
   "strategy-roadmapping": {
     title: "AI Strategy & Roadmapping",
@@ -134,8 +134,8 @@ const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Vendor and build-vs-buy guidance",
       "Implementation support and change management",
     ],
-    demoCtaLabel: "Book Free AI Strategy Call",
-    demoCtaHref: "/#book-call",
+    demoCtaLabel: "Book a free AI strategy call",
+    demoCtaHref: "/book?source=service-strategy-roadmapping",
   },
 };
 

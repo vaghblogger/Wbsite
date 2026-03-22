@@ -4,6 +4,7 @@ export interface AgentRunRequest {
   agent_id: string;
   message: string;
   session_id: string;
+  request_id?: string;
   phone?: string;
   history?: { role: string; content: string }[];
   agent_kind?: string;
@@ -16,9 +17,14 @@ export async function runAgent(
   request: AgentRunRequest,
   onEvent: (event: string) => void
 ): Promise<string> {
+  const internalToken = (process.env.INTERNAL_ENGINE_TOKEN || "").trim();
   const res = await fetch(`${AGENT_ENGINE_URL}/run`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(request.request_id ? { "X-Request-Id": request.request_id } : {}),
+      ...(internalToken ? { "X-Internal-Token": internalToken } : {}),
+    },
     body: JSON.stringify({
       agent_id: request.agent_id,
       message: request.message,

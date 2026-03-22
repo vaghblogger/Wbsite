@@ -76,7 +76,7 @@ export function SessionCalendar({
   }, [load]);
 
   const todayIst = istYyyyMmDd(0);
-  const maxBookIst = istYyyyMmDd(14);
+  const maxBookIst = istYyyyMmDd(21);
   const markedDays = useMemo(() => {
     const s = new Set<string>();
     for (const a of list) {
@@ -201,7 +201,7 @@ export function SessionCalendar({
       </div>
 
       <p className="text-[10px] text-muted-foreground mb-1.5">
-        Tap a day ({todayIst}–{maxBookIst} IST) — open times in the next 14 days
+        Tap a day ({todayIst}–{maxBookIst} IST) — open times in the next 3 weeks
       </p>
       <div className="grid grid-cols-7 gap-1 text-center text-[10px] text-muted-foreground mb-1">
         {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((w) => (
@@ -292,7 +292,7 @@ export function SessionCalendar({
           )}
           {!slotsLoading && slots.length === 0 && (
             <p className="text-[10px] text-amber-200/80">
-              No free slots or closed (Sun). Busy times stay available in chat only as “taken.”
+              No free slots for this day after calendar conflict checks.
             </p>
           )}
         </div>

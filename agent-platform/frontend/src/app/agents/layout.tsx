@@ -1,0 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "AI Agents",
+  description:
+    "Explore live AI agents for conversational support, booking, and workflow-driven business operations.",
+};
+
+export default function AgentsLayout({ children }: { children: React.ReactNode }) {
+  return children;
+}

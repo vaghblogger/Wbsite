@@ -491,6 +491,26 @@ export default function AgentDetailPage() {
             </section>
           </div>
         </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mt-10 rounded-2xl border border-violet-500/20 bg-violet-950/20 p-6 sm:p-8"
+        >
+          <h3 className="text-xl font-semibold tracking-tight text-foreground mb-2">
+            Ready to deploy something similar for your business?
+          </h3>
+          <p className="text-sm text-muted-foreground/90 mb-4 max-w-2xl">
+            We can map your use case, integrations, and rollout in a focused strategy call.
+          </p>
+          <Link
+            href="/book?source=agent-detail"
+            className="inline-flex rounded-lg border border-violet-500/35 bg-violet-500/15 px-4 py-2 text-sm font-medium text-violet-100 hover:bg-violet-500/25"
+          >
+            Book a free AI strategy call
+          </Link>
+        </motion.div>
       </div>
     </PageTransition>
   );

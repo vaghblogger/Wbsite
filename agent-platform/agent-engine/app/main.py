@@ -1,6 +1,8 @@
 import asyncio
 import json
-from fastapi import FastAPI
+import os
+import time
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
@@ -10,13 +12,49 @@ from app.agents.registry import is_configurable_front_desk
 from app.config import HOST, PORT
 
 app = FastAPI(title="Agent Engine", version="1.0.0")
+
+
+def _cors_origins() -> list[str]:
+    raw = os.getenv("CORS_ORIGINS", "").strip()
+    if not raw:
+        return ["http://localhost:3000", "http://127.0.0.1:3000"]
+    return [item.strip() for item in raw.split(",") if item.strip()]
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+def _require_internal_token(req: Request) -> None:
+    expected = os.getenv("INTERNAL_ENGINE_TOKEN", "").strip()
+    if not expected:
+        return
+    provided = req.headers.get("x-internal-token", "").strip()
+    if provided != expected:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+
+@app.middleware("http")
+async def request_logging_middleware(request: Request, call_next):
+    started = time.perf_counter()
+    request_id = request.headers.get("x-request-id", "")
+    response = await call_next(request)
+    elapsed_ms = (time.perf_counter() - started) * 1000
+    response.headers["x-request-id"] = request_id
+    print(
+        "[agent-engine]",
+        request.method,
+        request.url.path,
+        response.status_code,
+        f"{elapsed_ms:.1f}ms",
+        f"request_id={request_id or 'n/a'}",
+    )
+    return response
 
 
 class RunRequest(BaseModel):
@@ -37,12 +75,14 @@ async def health():
 
 
 @app.post("/health/sheets-test")
-async def health_sheets_test():
+async def health_sheets_test(request: Request):
     """Append one test row if Sheets env is configured; check agent-engine terminal for errors."""
-    import os
-
     from app.tools.vision_crm import _append_airtable_sheets, sheets_creds_path
 
+    if os.getenv("ALLOW_SHEETS_HEALTH_TEST", "false").lower() != "true":
+        raise HTTPException(status_code=404, detail="Not Found")
+
+    _require_internal_token(request)
     sid = os.getenv("GOOGLE_SHEETS_LOG_ID", "").strip()
     creds = sheets_creds_path()
     if not sid:
@@ -64,16 +104,18 @@ async def health_sheets_test():
 
 
 @app.get("/calendar/slots")
-async def calendar_slots(date: str, session_id: str = ""):
+async def calendar_slots(request: Request, date: str, session_id: str = ""):
     """Free slots for one clinic day (IST). session_id unused; reserved for future per-session blocks."""
+    _require_internal_token(request)
     from app.tools.vision_calendar import list_slots_for_date
 
     return list_slots_for_date(date)
 
 
 @app.get("/calendar/next-bookable-days")
-async def calendar_next_bookable_days(count: int = 2):
+async def calendar_next_bookable_days(request: Request, count: int = 2):
     """Next N IST days with at least one free slot (skips Sunday / closed / after hours)."""
+    _require_internal_token(request)
     from app.tools.vision_calendar import next_bookable_days
 
     n = min(max(count, 1), 7)
@@ -81,7 +123,8 @@ async def calendar_next_bookable_days(count: int = 2):
 
 
 @app.get("/calendar/appointments")
-async def calendar_appointments(session_id: str, phone: str = ""):
+async def calendar_appointments(request: Request, session_id: str, phone: str = ""):
+    _require_internal_token(request)
     from app.tools.vision_calendar import get_merged_appointments
 
     if not session_id.strip() and not phone.strip():
@@ -102,7 +145,8 @@ def _use_front_desk(req: RunRequest) -> bool:
 
 
 @app.post("/run")
-async def run_agent(request: RunRequest):
+async def run_agent(request: RunRequest, req: Request):
+    _require_internal_token(req)
     event_queue: asyncio.Queue = asyncio.Queue()
     front_desk = _use_front_desk(request)
 

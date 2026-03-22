@@ -49,25 +49,25 @@ export function CoreServiceCard({
     >
       <Link
         href={href}
-        className="group block h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 rounded-2xl"
+        className="group block h-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
-        <div className="relative flex h-full min-h-[20rem] flex-col rounded-2xl border-2 border-white/[0.08] bg-zinc-900/60 p-8 transition-all duration-300 hover:border-violet-500/30 hover:bg-zinc-900/90 hover:shadow-lg hover:shadow-violet-950/20">
+        <div className="relative flex h-full min-h-[20rem] flex-col rounded-2xl border border-border/70 bg-card/70 p-8 transition-all duration-300 hover:border-primary/40 hover:bg-card hover:shadow-lg hover:shadow-primary/20">
           {/* Top accent bar */}
-          <div className="absolute left-0 right-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r from-violet-500 to-purple-500 opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="absolute left-0 right-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r from-primary to-accent opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
 
           <div className="flex flex-1 flex-col pt-2">
-            <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-violet-500/15 text-violet-400 ring-1 ring-violet-500/20 transition-all duration-300 group-hover:bg-violet-500/25 group-hover:text-violet-300 group-hover:ring-violet-500/30">
+            <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary ring-1 ring-primary/20 transition-all duration-300 group-hover:bg-primary/25 group-hover:text-primary group-hover:ring-primary/35">
               <IconComponent className="h-7 w-7" strokeWidth={1.75} />
             </div>
 
-            <h3 className="mb-3 text-xl font-semibold tracking-tight text-white">
+            <h3 className="mb-3 text-xl font-semibold tracking-tight text-foreground">
               {title}
             </h3>
-            <p className="mb-6 flex-1 text-base leading-relaxed text-zinc-400">
+            <p className="mb-6 flex-1 text-base leading-relaxed text-muted-foreground">
               {description}
             </p>
 
-            <span className="inline-flex items-center gap-2 text-sm font-medium text-violet-400 transition-colors group-hover:text-violet-300">
+            <span className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors group-hover:text-primary/85">
               View service
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>

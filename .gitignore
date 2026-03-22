@@ -39,6 +39,8 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db
+# macOS AppleDouble sidecars (common on exFAT / external drives)
+._*
 
 # IDE
 .idea/

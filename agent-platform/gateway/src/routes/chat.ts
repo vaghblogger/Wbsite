@@ -14,6 +14,7 @@ export async function handleChat(
   }
 
   const { agent_id, message, session_id } = body;
+  const requestId = req.headers.get("x-request-id") || crypto.randomUUID();
   if (!agent_id || !message) {
     return Response.json(
       { error: "agent_id and message are required" },
@@ -72,6 +73,7 @@ export async function handleChat(
             agent_id,
             message,
             session_id: sessionId,
+            request_id: requestId,
             phone: body.phone,
             history: body.history,
             agent_kind,
